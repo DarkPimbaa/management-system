@@ -327,17 +327,30 @@ function renderFinanceiro(filtro = 'todos') {
     let dadosFiltrados = filtro === 'todos' ? transacoes : transacoes.filter(t => t.tipo === filtro);
     
     tbody.innerHTML = dadosFiltrados.map(t => `
-        <tr class="border-b border-gray-100 md:border-0 hover:bg-gray-50 transition">
-            <td class="py-3 px-4 font-medium text-gray-900">${t.descricao}</td>
-            <td class="py-3 px-4">${t.categoria}</td>
-            <td class="py-3 px-4 text-gray-500">${t.data}</td>
-            <td class="py-3 px-4 text-center">
+        <tr class="block md:table-row bg-white border border-gray-200 md:border-0 md:border-b md:border-gray-100 rounded-lg md:rounded-none mb-4 md:mb-0 p-3 md:p-0 shadow-sm md:shadow-none hover:bg-gray-50 transition">
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Descrição</span>
+                <span class="font-medium text-gray-900">${t.descricao}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Categoria</span>
+                <span>${t.categoria}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Data</span>
+                <span class="text-gray-500">${t.data}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0 md:text-center">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Tipo</span>
                 <span class="text-[10px] font-bold px-2 py-1 rounded ${t.tipo === 'receita' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
                     ${t.tipo.toUpperCase()}
                 </span>
             </td>
-            <td class="py-3 px-4 text-right font-semibold ${t.tipo === 'receita' ? 'text-green-600' : 'text-red-600'}">
-                ${t.tipo === 'receita' ? '+' : '-'} R$ ${t.valor}
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0 md:text-right">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Valor</span>
+                <span class="font-semibold ${t.tipo === 'receita' ? 'text-green-600' : 'text-red-600'}">
+                    ${t.tipo === 'receita' ? '+' : '-'} R$ ${t.valor}
+                </span>
             </td>
         </tr>
     `).join('');
@@ -354,15 +367,28 @@ function renderEstoque() {
         const statusText = p.estoque <= p.estoqueMin ? 'Baixo' : p.estoque <= p.estoqueMin * 2 ? 'Atenção' : 'Normal';
         
         return `
-            <tr class="border-b border-gray-100 md:border-0 hover:bg-gray-50 transition">
-                <td class="py-3 px-4 font-medium text-gray-900">${p.nome}</td>
-                <td class="py-3 px-4">${p.categoria}</td>
-                <td class="py-3 px-4 text-center font-bold">${p.estoque}</td>
-                <td class="py-3 px-4 text-center">
+            <tr class="block md:table-row bg-white border border-gray-200 md:border-0 md:border-b md:border-gray-100 rounded-lg md:rounded-none mb-4 md:mb-0 p-3 md:p-0 shadow-sm md:shadow-none hover:bg-gray-50 transition">
+                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                    <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Produto</span>
+                    <span class="font-medium text-gray-900">${p.nome}</span>
+                </td>
+                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                    <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Categoria</span>
+                    <span>${p.categoria}</span>
+                </td>
+                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0 md:text-center">
+                    <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Estoque</span>
+                    <span class="font-bold">${p.estoque}</span>
+                </td>
+                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0 md:text-center">
+                    <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Status</span>
                     <span class="text-[10px] font-bold px-2 py-1 rounded ${statusClass}">${statusText}</span>
                 </td>
-                <td class="py-3 px-4 text-right font-semibold text-gray-900">R$ ${p.preco}</td>
-                <td class="py-3 px-4 text-center">
+                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0 md:text-right">
+                    <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Preço</span>
+                    <span class="font-semibold text-gray-900">R$ ${p.preco}</span>
+                </td>
+                <td class="py-3 md:px-4 flex flex-wrap justify-center md:justify-center gap-2 mt-2 md:mt-0">
                     <button class="text-brand-blue hover:text-cyan-600 mx-1"><i class="fa-solid fa-edit"></i></button>
                     <button class="text-red-500 hover:text-red-600 mx-1"><i class="fa-solid fa-trash"></i></button>
                 </td>
@@ -376,12 +402,24 @@ function renderCadastros(tab = 'clientes') {
     const dados = tab === 'clientes' ? clientes : fornecedores;
     
     tbody.innerHTML = dados.map(c => `
-        <tr class="border-b border-gray-100 md:border-0 hover:bg-gray-50 transition">
-            <td class="py-3 px-4 font-medium text-gray-900">${c.nome}</td>
-            <td class="py-3 px-4 text-gray-500">${c.cnpj || c.cpf}</td>
-            <td class="py-3 px-4">${c.telefone}</td>
-            <td class="py-3 px-4 text-gray-500">${c.cidade}/${c.uf}</td>
-            <td class="py-3 px-4 text-center">
+        <tr class="block md:table-row bg-white border border-gray-200 md:border-0 md:border-b md:border-gray-100 rounded-lg md:rounded-none mb-4 md:mb-0 p-3 md:p-0 shadow-sm md:shadow-none hover:bg-gray-50 transition">
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Nome/Razão Social</span>
+                <span class="font-medium text-gray-900">${c.nome}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">CPF/CNPJ</span>
+                <span class="text-gray-500">${c.cnpj || c.cpf}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Telefone</span>
+                <span>${c.telefone}</span>
+            </td>
+            <td class="flex md:table-cell justify-between items-center py-2 md:py-3 md:px-4 border-b border-gray-100 md:border-0">
+                <span class="md:hidden font-semibold text-gray-500 text-xs uppercase">Cidade/UF</span>
+                <span class="text-gray-500">${c.cidade}/${c.uf}</span>
+            </td>
+            <td class="py-3 md:px-4 flex flex-wrap justify-center md:justify-center gap-2 mt-2 md:mt-0">
                 <button class="text-brand-blue hover:text-cyan-600 mx-1"><i class="fa-solid fa-edit"></i></button>
                 <button class="text-red-500 hover:text-red-600 mx-1"><i class="fa-solid fa-trash"></i></button>
             </td>
